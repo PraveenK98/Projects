@@ -1,0 +1,97 @@
+import cv2
+import time
+
+j = 0
+cap1 = cv2.VideoCapture('Tampa Traffic.avi')
+cap2 = cv2.VideoCapture('video.avi')
+cap3 = cv2.VideoCapture('Tampa Traffic.avi')
+count1 = 0
+count2 = 0
+count3 = 0
+car1_cascade = cv2.CascadeClassifier('cars.xml')
+car2_cascade = cv2.CascadeClassifier('cars.xml')
+car3_cascade = cv2.CascadeClassifier('cars.xml')
+ret1, frames1 = cap1.read()
+ret2, frames2 = cap2.read()
+ret3, frames3 = cap3.read()
+
+while True:
+
+    if ret1 == True:
+
+        gray = cv2.cvtColor(frames1, cv2.COLOR_BGR2GRAY)
+        cars1 = car1_cascade.detectMultiScale(gray, 1.1, 1)
+
+        for (x, y, w, h) in cars1:
+            cv2.rectangle(frames1, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            count1 = count1 + 1
+
+
+        print('\nA->stop *\nB->stop *\nc->go-->>')
+
+        c = count1 *2
+        count = c
+
+        for i in range(c):
+            count = count - 1
+            a = count
+
+            print (a,'Sec remaining')
+
+            time.sleep(1)
+
+        for k in range(3):
+            time.sleep(1)
+    if ret2 == True:
+
+        gray = cv2.cvtColor(frames2, cv2.COLOR_BGR2GRAY)
+        cars2 = car2_cascade.detectMultiScale(gray, 1.1, 1)
+
+        for (x, y, w, h) in cars2:
+            cv2.rectangle(frames2, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            count2 = count2 + 1
+
+
+        print('\nB->Go-->>\nA->stop *\nc->stop *')
+
+        c2 = count2 * 3
+        countb = c2
+        for j in range(c2):
+            countb = countb - 1
+            b = countb
+            print (b, "sec remaining")
+            time.sleep(1)
+
+        for k in range(3):
+            time.sleep(1)
+
+    if ret3 == True:
+
+        gray = cv2.cvtColor(frames3, cv2.COLOR_BGR2GRAY)
+
+        cars3 = car3_cascade.detectMultiScale(gray, 1.1, 1)
+
+        for (x, y, w, h) in cars3:
+            cv2.rectangle(frames3, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            count3 = count3 + 1
+
+        print('\nA->Go-->>\nB->stop *\nc->stop *')
+
+        print("LED on")
+
+        d = count3 * 3
+        countc = d
+        for i in range(d):
+            countc = countc - 1
+            m = countc
+            print (m, "sec remaining")
+            time.sleep(1)
+
+        for k in range(3):
+            time.sleep(1)
+
+    # print (count1)
+    # print (count2)
+    # print (count3)
+
+cv2.destroyAllWindows()
